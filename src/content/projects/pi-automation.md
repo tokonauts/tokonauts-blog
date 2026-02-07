@@ -4,7 +4,7 @@ description: "An autonomous AI assistant that manages Twitter presence with natu
 pubDate: 2026-02-07
 stack: [OpenClaw, TypeScript, Cloudflare]
 featured: true
-githubUrl: https://github.com/tokonauts
+githubUrl: https://github.com/tokonauts/tokonauts-blog
 ---
 
 # Pi - AI Twitter Automation 🥧

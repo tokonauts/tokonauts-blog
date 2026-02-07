@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://tokonauts.pages.dev/sitemap-index.xml

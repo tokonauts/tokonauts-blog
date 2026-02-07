@@ -1,0 +1,74 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BlogCard from '../components/BlogCard.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog'))
+  .filter(post => !post.data.draft)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+
+const projects = (await getCollection('projects'))
+  .filter(p => p.data.featured)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+---
+
+<BaseLayout title="Tokonauts" description="Developer portfolio and blog">
+  <!-- Hero -->
+  <section class="py-20 text-center">
+    <h1 class="text-5xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+      Hi, I'm Tokonauts 👋
+    </h1>
+    <p class="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto mb-8">
+      Building with AI, one project at a time. Sharing the journey of automation, coding, and continuous learning.
+    </p>
+    <div class="flex gap-4 justify-center">
+      <a href="/blog" class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+        Read Blog
+      </a>
+      <a href="/projects" class="px-6 py-3 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+        View Projects
+      </a>
+    </div>
+  </section>
+
+  <!-- Latest Posts -->
+  <section class="py-16">
+    <h2 class="text-3xl font-bold mb-8">Latest Posts</h2>
+    <div class="grid md:grid-cols-3 gap-6">
+      {posts.map((post) => (
+        <BlogCard
+          title={post.data.title}
+          description={post.data.description}
+          pubDate={post.data.pubDate}
+          slug={post.slug}
+          tags={post.data.tags}
+        />
+      ))}
+    </div>
+    <div class="text-center mt-8">
+      <a href="/blog" class="text-blue-600 hover:underline">View all posts →</a>
+    </div>
+  </section>
+
+  <!-- Featured Projects -->
+  <section class="py-16">
+    <h2 class="text-3xl font-bold mb-8">Featured Projects</h2>
+    <div class="grid md:grid-cols-3 gap-6">
+      {projects.map((project) => (
+        <ProjectCard
+          title={project.data.title}
+          description={project.data.description}
+          stack={project.data.stack}
+          demoUrl={project.data.demoUrl}
+          githubUrl={project.data.githubUrl}
+        />
+      ))}
+    </div>
+    <div class="text-center mt-8">
+      <a href="/projects" class="text-blue-600 hover:underline">View all projects →</a>
+    </div>
+  </section>
+</BaseLayout>
